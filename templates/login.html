@@ -98,16 +98,14 @@
         {% endif %}
         <!-- ... your existing login form ... -->
 
-<!-- Add the "Auto Trade" button and "Coming Soon" message -->
+<!-- Add the "Auto Trade" button -->
 <div class="auto-trade-button-container">
     <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
-    <p class="coming-soon-message" id="comingSoonMessage">Coming Soon</p>
 </div>
 
 <!-- Add JavaScript for the countdown and redirection -->
 <script>
     const autoTradeButton = document.getElementById('autoTradeButton');
-    const comingSoonMessage = document.getElementById('comingSoonMessage');
 
     autoTradeButton.addEventListener('click', () => {
         // Disable the button
@@ -117,14 +115,22 @@
 
         function updateCountdown() {
             if (count > 0) {
-                comingSoonMessage.innerHTML = count;
+                autoTradeButton.innerHTML = `Going Auto Trade Platform Coinsily in ${count}`;
                 count--;
                 setTimeout(updateCountdown, 1000);
             } else {
-                comingSoonMessage.innerHTML = 'Going Auto Trade';
+                autoTradeButton.innerHTML = 'Redirecting to coinsily.com';
 
-                //
+                // Redirect the user to coinsily.com after a short delay
+                setTimeout(() => {
+                    window.location.href = 'https://coinsily.com';
+                }, 1000);
+            }
+        }
 
+        updateCountdown();
+    });
+</script>
 
 
 
