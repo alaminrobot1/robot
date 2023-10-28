@@ -98,36 +98,73 @@
         {% endif %}
         <!-- ... your existing login form ... -->
 
-<!-- Add the "Auto Trade" button -->
+<!-- Add the "Auto Trade" button and styling -->
 <div class="auto-trade-button-container">
     <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
 </div>
+
+<!-- Add CSS for styling the countdown and redirection -->
+<style>
+    .auto-trade-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .auto-trade-button:hover {
+        background-color: #0056b3;
+    }
+
+    .countdown {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .redirect-message {
+        font-size: 20px;
+        color: #4CAF50; /* Green color for "Redirecting" */
+    }
+</style>
 
 <!-- Add JavaScript for the countdown and redirection -->
 <script>
     const autoTradeButton = document.getElementById('autoTradeButton');
 
     autoTradeButton.addEventListener('click', () => {
-        // Disable the button
         autoTradeButton.disabled = true;
 
-        autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 3';
+        let count = 3;
+        const countdown = document.createElement('div');
+        countdown.className = 'countdown';
+        autoTradeButton.parentNode.appendChild(countdown);
 
-        setTimeout(() => {
-            autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 2';
-            setTimeout(() => {
-                autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 1';
+        function updateCountdown() {
+            if (count > 0) {
+                countdown.innerHTML = `${count}`;
+                count--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                countdown.style.display = 'none';
+                autoTradeButton.innerHTML = 'Redirecting to coinsily.com';
+                const redirectMessage = document.createElement('div');
+                redirectMessage.className = 'redirect-message';
+                redirectMessage.innerHTML = 'Redirecting to coinsily.com';
+                autoTradeButton.parentNode.appendChild(redirectMessage);
+
                 setTimeout(() => {
-                    autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily';
-                    // Redirect the user to coinsily.com after a short delay
-                    setTimeout(() => {
-                        window.location.href = 'https://coinsily.com';
-                    }, 1000);
+                    window.location.href = 'https://coinsily.com';
                 }, 1000);
-            }, 1000);
-        }, 1000);
+            }
+        }
+
+        updateCountdown();
     });
 </script>
+
 
 
 
