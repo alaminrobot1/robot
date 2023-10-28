@@ -98,31 +98,41 @@
         {% endif %}
         <!-- ... your existing login form ... -->
 
- <!-- Add the "Auto Trade" button and "Coming Soon" message -->
+<!-- Add the "Auto Trade" button and "Coming Soon" message -->
 <div class="auto-trade-button-container">
     <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
     <p class="coming-soon-message" id="comingSoonMessage">Coming Soon</p>
 </div>
 
-<!-- Add JavaScript to show the "Coming Soon" message when the button is clicked -->
+<!-- Add JavaScript for the countdown and redirection -->
 <script>
     const autoTradeButton = document.getElementById('autoTradeButton');
     const comingSoonMessage = document.getElementById('comingSoonMessage');
 
     autoTradeButton.addEventListener('click', () => {
-        comingSoonMessage.style.display = 'block';
+        // Disable the button
+        autoTradeButton.disabled = true;
 
-        // Delay hiding the message by 2 seconds
-        setTimeout(() => {
-            comingSoonMessage.style.display = 'none';
-        }, 2000);
+        let count = 3;
+        comingSoonMessage.innerHTML = count;
 
-        // Redirect the user to coinsily.com after a delay (change the URL as needed)
-        setTimeout(() => {
-            window.location.href = 'https://coinsily.com';
-        }, 2000);
+        const countdownInterval = setInterval(() => {
+            count--;
+            comingSoonMessage.innerHTML = count;
+
+            if (count === 0) {
+                clearInterval(countdownInterval);
+                comingSoonMessage.innerHTML = 'Going Auto Trade';
+
+                // Redirect the user to coinsily.com after a short delay
+                setTimeout(() => {
+                    window.location.href = 'https://coinsily.com';
+                }, 1000);
+            }
+        }, 1000);
     });
 </script>
+
 
 </body>
 </html>
