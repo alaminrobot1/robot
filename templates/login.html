@@ -114,24 +114,17 @@
         autoTradeButton.disabled = true;
 
         let count = 3;
-        comingSoonMessage.innerHTML = count;
 
-        const countdownInterval = setInterval(() => {
-            count--;
-            comingSoonMessage.innerHTML = count;
-
-            if (count === 0) {
-                clearInterval(countdownInterval);
+        function updateCountdown() {
+            if (count > 0) {
+                comingSoonMessage.innerHTML = count;
+                count--;
+                setTimeout(updateCountdown, 1000);
+            } else {
                 comingSoonMessage.innerHTML = 'Going Auto Trade';
 
-                // Redirect the user to coinsily.com after a short delay
-                setTimeout(() => {
-                    window.location.href = 'https://coinsily.com';
-                }, 1000);
-            }
-        }, 1000);
-    });
-</script>
+                //
+
 
 
 
