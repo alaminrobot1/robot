@@ -98,24 +98,31 @@
         {% endif %}
         <!-- ... your existing login form ... -->
 
-        <!-- Add the "Auto Trade" button and "Coming Soon" message -->
-        <div class="auto-trade-button-container">
-            <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
-            <p class="coming-soon-message" id="comingSoonMessage">Coming Soon</p>
-        </div>
-    </div>
+ <!-- Add the "Auto Trade" button and "Coming Soon" message -->
+<div class="auto-trade-button-container">
+    <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
+    <p class="coming-soon-message" id="comingSoonMessage">Coming Soon</p>
+</div>
 
-    <!-- Add JavaScript to show the "Coming Soon" message when the button is clicked -->
-    <script>
-        const autoTradeButton = document.getElementById('autoTradeButton');
-        const comingSoonMessage = document.getElementById('comingSoonMessage');
+<!-- Add JavaScript to show the "Coming Soon" message when the button is clicked -->
+<script>
+    const autoTradeButton = document.getElementById('autoTradeButton');
+    const comingSoonMessage = document.getElementById('comingSoonMessage');
 
-        autoTradeButton.addEventListener('click', () => {
-            comingSoonMessage.style.display = 'block';
-            setTimeout(() => {
-                comingSoonMessage.style.display = 'none';
-            }, 2000); // Hide the message after 2 seconds
-        });
-    </script>
+    autoTradeButton.addEventListener('click', () => {
+        comingSoonMessage.style.display = 'block';
+
+        // Delay hiding the message by 2 seconds
+        setTimeout(() => {
+            comingSoonMessage.style.display = 'none';
+        }, 2000);
+
+        // Redirect the user to coinsily.com after a delay (change the URL as needed)
+        setTimeout(() => {
+            window.location.href = 'https://coinsily.com';
+        }, 2000);
+    });
+</script>
+
 </body>
 </html>
