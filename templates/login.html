@@ -75,34 +75,7 @@
             margin-top: 10px;
             display: none; /* Initially hidden */
         }
-       body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .countdown-container {
-            text-align: center;
-            color: #fff;
-            font-size: 100px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .auto-trade-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 24px;
-        }
+       
     </style>
 </head>
 <body>
@@ -126,67 +99,39 @@
         {% endif %}
         <!-- ... your existing login form ... -->
 
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+<!-- Add the "Auto Trade" button -->
+<div class="auto-trade-button-container">
+    <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
+</div>
 
-        .countdown-container {
-            text-align: center;
-            color: #fff;
-            font-size: 200px;
-            font-weight: bold;
-        }
+<!-- Add JavaScript for the countdown and redirection -->
+<script>
+    const autoTradeButton = document.getElementById('autoTradeButton');
 
-        .auto-trade-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 24px;
-        }
-    </style>
-    <div class="countdown-container" id="countdown">
-        3
-    </div>
+    autoTradeButton.addEventListener('click', () => {
+        // Disable the button
+        autoTradeButton.disabled = true;
 
-    <div class="auto-trade-button" id="autoTradeButton">Auto Trade</div>
+        let count = 3;
 
-    <script>
-        const autoTradeButton = document.getElementById('autoTradeButton');
-        const countdown = document.getElementById('countdown');
+        function updateCountdown() {
+            if (count > 0) {
+                autoTradeButton.innerHTML = `Going Auto Trade Platform Coinsily in ${count}`;
+                count--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                autoTradeButton.innerHTML = 'Redirecting to coinsily.com';
 
-        autoTradeButton.addEventListener('click', () => {
-            autoTradeButton.style.display = 'none';
-            countdown.style.display = 'block';
-
-            function updateCountdown(count) {
-                countdown.innerHTML = count;
-                if (count > 0) {
-                    setTimeout(() => {
-                        updateCountdown(count - 1);
-                    }, 1000);
-                } else {
-                    countdown.innerHTML = 'Go!';
-                    setTimeout(() => {
-                        window.location.href = 'https://coinsily.com';
-                    }, 1000);
-                }
+                // Redirect the user to coinsily.com after a short delay
+                setTimeout(() => {
+                    window.location.href = 'https://coinsily.com';
+                }, 1000);
             }
+        }
 
-            updateCountdown(3);
-        });
-    </script>
+        updateCountdown();
+    });
+</script>
+
 </body>
 </html>
