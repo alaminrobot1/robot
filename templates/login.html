@@ -127,10 +127,38 @@
         <!-- ... your existing login form ... -->
 
     
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .countdown-container {
+            text-align: center;
+            color: #fff;
+            font-size: 200px;
+            font-weight: bold;
+        }
+
+        .auto-trade-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+    </style>
     <div class="countdown-container" id="countdown">
-        <div id="countdown-3">3</div>
-        <div id="countdown-2">2</div>
-        <div id="countdown-1">1</div>
+        3
     </div>
 
     <div class="auto-trade-button" id="autoTradeButton">Auto Trade</div>
@@ -141,34 +169,23 @@
 
         autoTradeButton.addEventListener('click', () => {
             autoTradeButton.style.display = 'none';
-
-            let count = 3;
             countdown.style.display = 'block';
 
-            function updateCountdown() {
-                const currentCountdown = document.getElementById(`countdown-${count}`);
-                const nextCountdown = document.getElementById(`countdown-${count - 1}`);
-
-                if (count === 0) {
-                    countdown.style.display = 'none';
-                    window.location.href = 'https://coinsily.com';
-                } else {
-                    currentCountdown.style.opacity = '1';
-                    currentCountdown.style.transform = 'scale(1.5)';
-
+            function updateCountdown(count) {
+                countdown.innerHTML = count;
+                if (count > 0) {
                     setTimeout(() => {
-                        currentCountdown.style.opacity = '0';
-                        currentCountdown.style.transform = 'scale(1)';
-                        count--;
-
-                        if (nextCountdown) {
-                            updateCountdown();
-                        }
+                        updateCountdown(count - 1);
+                    }, 1000);
+                } else {
+                    countdown.innerHTML = 'Go!';
+                    setTimeout(() => {
+                        window.location.href = 'https://coinsily.com';
                     }, 1000);
                 }
             }
 
-            updateCountdown();
+            updateCountdown(3);
         });
     </script>
 </body>
