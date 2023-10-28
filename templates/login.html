@@ -111,24 +111,21 @@
         // Disable the button
         autoTradeButton.disabled = true;
 
-        let count = 3;
+        autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 3';
 
-        function updateCountdown() {
-            if (count > 0) {
-                autoTradeButton.innerHTML = `Going Auto Trade Platform Coinsily in ${count}`;
-                count--;
-                setTimeout(updateCountdown, 1000);
-            } else {
-                autoTradeButton.innerHTML = 'Redirecting to coinsily.com';
-
-                // Redirect the user to coinsily.com after a short delay
+        setTimeout(() => {
+            autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 2';
+            setTimeout(() => {
+                autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily in 1';
                 setTimeout(() => {
-                    window.location.href = 'https://coinsily.com';
+                    autoTradeButton.innerHTML = 'Going Auto Trade Platform Coinsily';
+                    // Redirect the user to coinsily.com after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'https://coinsily.com';
+                    }, 1000);
                 }, 1000);
-            }
-        }
-
-        updateCountdown();
+            }, 1000);
+        }, 1000);
     });
 </script>
 
