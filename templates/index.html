@@ -50,6 +50,7 @@
                 <th>{{ exchange1_name }} Price</th>
                 <th>{{ exchange2_name }} Price</th>
                 <th>Guaranteed Profit (%)</th>
+                <th>Spread (%)</th>
                 <th>{{ exchange1_name }} Trade Link</th>
                 <th>{{ exchange2_name }} Trade Link</th>
             </tr>
@@ -61,9 +62,13 @@
                     <td>{{ item.exchange1_price }}</td>
                     <td>{{ item.exchange2_price }}</td>
                     <td class="arbitrage {% if item.arbitrage > 0 %}highlight-green{% else %}highlight-red{% endif %}">
-                        {{ item.arbitrage }} <!-- Original term for calculations -->
+                        {{ item.arbitrage }}% <!-- Guaranteed Profit (%) -->
                         <br>
                         <span class="data-term">Guaranteed Profit (%)</span> <!-- Displayed term -->
+                    </td>
+                    <td>{{ item.spread }}% <!-- Spread (%) -->
+                        <br>
+                        <span class="data-term">Spread (%)</span> <!-- Displayed term for the spread -->
                     </td>
                     <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
                     <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
