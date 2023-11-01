@@ -1,4 +1,6 @@
 import ccxt
+import importlib
+
 
 def check_liquidity_and_network(exchange_key, symbol):
     exchange_info = EXCHANGES.get(exchange_key)
