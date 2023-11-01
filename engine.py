@@ -1,4 +1,4 @@
-import importlib
+from importlib import import_module
 import json
 from config import EXCHANGES
 from check import check_liquidity_and_network
