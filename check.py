@@ -1,3 +1,4 @@
+from config import EXCHANGES
 import ccxt
 import importlib
 
