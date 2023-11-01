@@ -1,8 +1,11 @@
 import ccxt
 import logging
 
-# Create a logger
-logger = logging.getLogger(__name)
+# Create a logger specific to this module
+logger = logging.getLogger(__name__)
+
+# Create a custom module-specific name
+__module_name__ = "mexc_module"
 
 def get_exchange_data():
     try:
@@ -42,6 +45,7 @@ def get_exchange_data():
                 withdrawal_fees[quote_asset] = mxc.fetch_withdraw_fees(quote_asset)
 
         return {
+            'exchange_name': __module_name__,
             'tickers': mxc_tickers,
             'order_books': order_books,
             'deposit_withdraw_info': deposit_withdraw_info,
