@@ -4,7 +4,7 @@ from config import EXCHANGES
 from check import check_liquidity_and_network
 
 def get_exchange_name(exchange_key):
-  return EXCHANGES[exchange_key]['name']
+    return EXCHANGES[exchange_key]['name']
 
 def get_exchange_module(exchange_key):
   module_name = EXCHANGES[exchange_key]['module']
