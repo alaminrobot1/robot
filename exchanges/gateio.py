@@ -52,5 +52,3 @@ def get_exchange_data():
         # Log the error and its context
         logger.error(f"Error retrieving data from Gate.io API: {e}")
         raise
-
-# If this file is run directly, you can add code to test the function
