@@ -1,14 +1,20 @@
 import ccxt
+import logging
 
-gateio = ccxt.gateio()
+# Create a logger
+logger = logging.getLogger(__name)
 
 def get_exchange_data():
     try:
+        # Initialize Gate.io exchange instance
+        gateio = ccxt.gateio()
+
+        # Load markets, fetch tickers, and other data
         gateio_markets = gateio.load_markets()
         gateio_spot_markets = {symbol: market for symbol, market in gateio_markets.items() if market['spot'] and market['active']}
         gateio_tickers = gateio.fetch_tickers(list(gateio_spot_markets.keys()))
 
-        # Initialize dictionaries to store order book, deposit/withdraw, trading fee, and withdrawal fee data
+        # Initialize dictionaries to store data
         order_books = {}
         deposit_withdraw_info = {}
         trading_fees = {}
@@ -43,4 +49,15 @@ def get_exchange_data():
             'withdrawal_fees': withdrawal_fees
         }
     except Exception as e:
-        return None, "Error retrieving data from Gate.io API: {}".format(e)
+        # Log the error and its context
+        logger.error(f"Error retrieving data from Gate.io API: {e}")
+        raise
+
+# If this file is run directly, you can add code to test the function
+if __name__ == "__main__":
+    try:
+        data = get_exchange_data()
+        # You can print or use the 'data' as needed
+        print(data)
+    except Exception as e:
+        logger.error(f"Error in main execution: {e}")
