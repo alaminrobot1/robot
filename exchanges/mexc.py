@@ -10,7 +10,7 @@ __module_name__ = "mexc_module"
 def get_exchange_data():
     try:
         # Initialize MXC exchange instance
-        mxc = ccxt.mxc()
+        mxc = ccxt.mexc()
 
         # Load markets, fetch tickers, and other data
         mxc_markets = mxc.load_markets()
