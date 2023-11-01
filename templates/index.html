@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guaranteed Profit Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Guaranteed Profit Opportunities</h1>
+
+    <div class="engine">
+        <h2>Calculation Engine</h2>
+        <form action="/calculate" method="post">
+            <label for="exchange1"></label>
+            <select name="exchange1" id="exchange1">
+                {% for exchange_key, exchange_data in exchanges.items() %}
+                    <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="exchange2"><i class="far fa-exchange-alt fa-rotate-90" style="transform: translate(-50%, -50%)"></i></label>
+            <select name="exchange2" id="exchange2">
+                {% for exchange_key, exchange_data in exchanges.items() %}
+                    <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input type="submit" value="Calculate Guaranteed Profit">
+        </form>
+    </div>
+
+    <div class="counts">
+        <div class="count">
+            <span class="label">Positive Count:</span>
+            <span class="value">{{ positive_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Negative Count:</span>
+            <span class="value">{{ negative_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Total Opportunities:</span>
+            <span class="value">{{ positive_count + negative_count }}</span>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>{{ exchange1_name }} Price</th>
+                <th>{{ exchange2_name }} Price</th>
+                <th>Guaranteed Profit (%)</th>
+                <th>{{ exchange1_name }} Trade Link</th>
+                <th>{{ exchange2_name }} Trade Link</th>
+                <th>Liquidity Check</th> <!-- Add Liquidity Check Header -->
+                <th>Deposit/Withdraw Match</th> <!-- Add Deposit/Withdraw Match Header -->
+                <th>Withdraw Fees</th> <!-- Add Withdraw Fees Header -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.exchange1_price }}</td>
+                    <td>{{ item.exchange2_price }}</td>
+                    <td class="arbitrage {% if item.arbitrage > 0 %}highlight-green{% else %}highlight-red{% endif %}">
+                        {{ item.arbitrage }} <!-- Original term for calculations -->
+                        <br>
+                        <span class="data-term">Guaranteed Profit (%)</span> <!-- Displayed term -->
+                    </td>
+                    <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
+                    <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
+                    <td>{{ item.liquidity_check }}</td> <!-- Display Liquidity Check Data -->
+                    <td>{{ item.deposit_withdraw_match }}</td> <!-- Display Deposit/Withdraw Match Data -->
+                    <td>{{ item.withdraw_fees }}</td> <!-- Display Withdraw Fees Data -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="arrow-key"></div>
+    
+    <div id="color-picker">
+        <input type="color" id="selected-color" value="#ff0000">
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
