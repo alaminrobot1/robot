@@ -54,10 +54,3 @@ def get_exchange_data():
         raise
 
 # If this file is run directly, you can add code to test the function
-if __name__ == "__main__":
-    try:
-        data = get_exchange_data()
-        # You can print or use the 'data' as needed
-        print(data)
-    except Exception as e:
-        logger.error(f"Error in main execution: {e}")
