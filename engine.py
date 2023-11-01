@@ -1,7 +1,7 @@
 from importlib import import_module
 from config import EXCHANGES
 
-from .check import check_liquidity_and_network
+from check import check_liquidity_and_network
 
 def get_exchange_name(exchange_key):
   return EXCHANGES[exchange_key]['name']
