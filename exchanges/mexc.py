@@ -1,46 +1,63 @@
 import ccxt
+import logging
 
-mexc = ccxt.mexc()
+# Create a logger
+logger = logging.getLogger(__name)
 
 def get_exchange_data():
     try:
-        mexc_markets = mexc.load_markets()
-        mexc_spot_markets = {symbol: market for symbol, market in mexc_markets.items() if market['spot'] and market['active']}
-        mexc_tickers = mexc.fetch_tickers(list(mexc_spot_markets.keys()))
+        # Initialize MXC exchange instance
+        mxc = ccxt.mxc()
 
-        # Initialize dictionaries to store order book, deposit/withdraw, trading fee, and withdrawal fee data
+        # Load markets, fetch tickers, and other data
+        mxc_markets = mxc.load_markets()
+        mxc_spot_markets = {symbol: market for symbol, market in mxc_markets.items() if market['spot'] and market['active']}
+        mxc_tickers = mxc.fetch_tickers(list(mxc_spot_markets.keys()))
+
+        # Initialize dictionaries to store data
         order_books = {}
         deposit_withdraw_info = {}
         trading_fees = {}
         withdrawal_fees = {}
 
         # Loop through all available trading pairs
-        for symbol in mexc_spot_markets:
+        for symbol in mxc_spot_markets:
             # Retrieve order book data for the current trading pair
-            order_books[symbol] = mexc.fetch_order_book(symbol)
+            order_books[symbol] = mxc.fetch_order_book(symbol)
 
             # Retrieve deposit/withdraw network information for the current trading pair's assets
             base_asset, quote_asset = symbol.split('/')
             if base_asset not in deposit_withdraw_info:
-                deposit_withdraw_info[base_asset] = mexc.fetch_deposit_and_withdraw(base_asset)
+                deposit_withdraw_info[base_asset] = mxc.fetch_deposit_and_withdraw(base_asset)
             if quote_asset not in deposit_withdraw_info:
-                deposit_withdraw_info[quote_asset] = mexc.fetch_deposit_and_withdraw(quote_asset)
+                deposit_withdraw_info[quote_asset] = mxc.fetch_deposit_and_withdraw(quote_asset)
 
             # Retrieve trading fees for the current trading pair
-            trading_fees[symbol] = mexc.fetch_trading_fees(symbol)
+            trading_fees[symbol] = mxc.fetch_trading_fees(symbol)
 
             # Retrieve withdrawal fees for the current trading pair's assets
             if base_asset not in withdrawal_fees:
-                withdrawal_fees[base_asset] = mexc.fetch_withdraw_fees(base_asset)
+                withdrawal_fees[base_asset] = mxc.fetch_withdraw_fees(base_asset)
             if quote_asset not in withdrawal_fees:
-                withdrawal_fees[quote_asset] = mexc.fetch_withdraw_fees(quote_asset)
+                withdrawal_fees[quote_asset] = mxc.fetch_withdraw_fees(quote_asset)
 
         return {
-            'tickers': mexc_tickers,
+            'tickers': mxc_tickers,
             'order_books': order_books,
             'deposit_withdraw_info': deposit_withdraw_info,
             'trading_fees': trading_fees,
             'withdrawal_fees': withdrawal_fees
         }
     except Exception as e:
-        return None, "Error retrieving data from MEXC API: {}".format(e)
+        # Log the error and its context
+        logger.error(f"Error retrieving data from MXC API: {e}")
+        raise
+
+# If this file is run directly, you can add code to test the function
+if __name__ == "__main__":
+    try:
+        data = get_exchange_data()
+        # You can print or use the 'data' as needed
+        print(data)
+    except Exception as e:
+        logger.error(f"Error in main execution: {e}")
