@@ -31,15 +31,15 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange1_price = float(exchange1_data['tickers'][symbol]['last'])
         exchange2_price = float(exchange2_data['tickers'][symbol]['last']) if exchange2_data['tickers'][symbol]['last'] is not None else 0.0
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
+
+        exchange1_symbol_link, exchange2_symbol_link = "", ""  # Initialize these variables
+
         if exchange1 in ('exchanges.mexc', 'exchanges.gateio', 'exchanges.binance'):
             exchange1_symbol_link = symbol.replace('/', '_')
         elif exchange1 == 'exchanges.bybit':
             exchange1_symbol_link = symbol.replace('/', '/')
         elif exchange1 == 'exchanges.kucoin':
             exchange1_symbol_link = symbol.replace('/', '-')
-       
-           
-            
 
         if exchange2 in ('exchanges.mexc', 'exchanges.gateio', 'exchanges.binance'):
             exchange2_symbol_link = symbol.replace('/', '_')
@@ -47,7 +47,7 @@ def calculate_arbitrage(exchange1, exchange2):
             exchange2_symbol_link = symbol.replace('/', '/')
         elif exchange2 == 'exchanges.kucoin':
             exchange2_symbol_link = symbol.replace('/', '-')
-        
+
         exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, exchange1_symbol_link)
         exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, exchange2_symbol_link)
 
@@ -74,3 +74,5 @@ def calculate_arbitrage(exchange1, exchange2):
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
     return data
+
+# Additional functions for liquidity, deposit/withdraw checks, and withdraw fees can be added here
