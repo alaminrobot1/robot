@@ -2,6 +2,7 @@ flask
 ccxt
 gunicorn
 requests
+importlib-metadata
 
 
 
