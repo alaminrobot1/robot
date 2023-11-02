@@ -82,8 +82,10 @@ def login():
 def calculate():
     exchange1 = request.form['exchange1']
     exchange2 = request.form['exchange2']
+    min_liquidity = float(request.form['min_liquidity'])
 
-    data = calculate_arbitrage(exchange1, exchange2)
+    data = calculate_arbitrage(exchange1, exchange2, min_liquidity)  # Pass the min_liquidity as a parameter
+
     
     # Count the number of positive and negative arbitrage opportunities
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
