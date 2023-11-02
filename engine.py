@@ -30,8 +30,8 @@ def calculate_arbitrage(exchange1, exchange2):
     data = []
     for symbol in common_symbols:
         # Get the order books from both exchanges
-        order_book_exchange1 = exchange1_module.fetchOrderBook(symbol)
-        order_book_exchange2 = exchange2_module.fetchOrderBook(symbol)
+        order_book_exchange1 = exchange1_module.fetch_order_book(symbol)
+        order_book_exchange2 = exchange2_module.fetch_order_book(symbol)
 
         # Calculate bid and ask prices
         exchange1_bid_price = sum(bid[0] * bid[1] for bid in order_book_exchange1['bids']) / sum(bid[1] for bid in order_book_exchange1['bids'])
