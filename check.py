@@ -3,7 +3,7 @@ import ccxt
 import importlib
 
 
-def check_liquidity(exchange_key, symbol):
+def check_liquidity(exchange_key, symbol, min_liquidity):
     exchange_info = EXCHANGES.get(exchange_key)
     if not exchange_info:
         return False, False
@@ -15,15 +15,11 @@ def check_liquidity(exchange_key, symbol):
         order_book = exchange.fetchOrderBook(symbol)
         liquidity = order_book['asks'][0][1] + order_book['bids'][0][1]
 
-        deposit_methods = exchange.fetchDepositMethods(symbol)
-        withdrawal_methods = exchange.fetchWithdrawalMethods(symbol)
-
-        if symbol in deposit_methods and symbol in withdrawal_methods:
-            deposit_withdraw_network_available = True
+        # Check if liquidity meets the minimum requirement
+        if liquidity >= min_liquidity:
+            return liquidity, True
         else:
-            deposit_withdraw_network_available = False
-
-        return liquidity, deposit_withdraw_network_available
+            return liquidity, False
 
     except Exception as e:
         return False, False
