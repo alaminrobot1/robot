@@ -3,7 +3,7 @@ import ccxt
 import importlib
 
 
-def check_liquidity_and_network(exchange_key, symbol):
+def check_liquidity(exchange_key, symbol):
     exchange_info = EXCHANGES.get(exchange_key)
     if not exchange_info:
         return False, False
