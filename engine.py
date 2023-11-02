@@ -23,7 +23,8 @@ def calculate_arbitrage(exchange1, exchange2, min_liquidity):
     exchange1_tickers = exchange1_module.get_exchange_data()
     exchange2_tickers = exchange2_module.get_exchange_data()
 
-    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys()
+    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys())
+
 
     data = []
     for symbol in common_symbols:
