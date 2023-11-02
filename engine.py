@@ -23,22 +23,21 @@ def calculate_arbitrage(exchange1, exchange2, min_liquidity):
     exchange1_tickers = exchange1_module.get_exchange_data()
     exchange2_tickers = exchange2_module.get_exchange_data()
 
-    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys())
+    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys()
 
     data = []
     for symbol in common_symbols:
         # Check for liquidity on both exchanges
-        liquidity1 = check_liquidity(exchange1, symbol)
-        liquidity2 = check_liquidity(exchange2, symbol)
+        liquidity1, liquidity1_available = check_liquidity(exchange1, symbol, min_liquidity)
+        liquidity2, liquidity2_available = check_liquidity(exchange2, symbol, min_liquidity)
 
         # Only include arbitrage opportunities where both exchanges have sufficient liquidity
-        if liquidity1 >= min_liquidity and liquidity2 >= min_liquidity:
+        if liquidity1_available and liquidity2_available:
 
             exchange1_price = float(exchange1_tickers[symbol]['last'])
             exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
             arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
 
-            # Add new updates
             # Calculate the spread between the two exchanges
             spread = round((exchange2_price - exchange1_price) / (exchange1_price + exchange2_price) * 2 * 100, 2)
 
