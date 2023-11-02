@@ -1,6 +1,6 @@
 from importlib import import_module
 from config import EXCHANGES
-from check import check_liquidity_and_network
+from check import check_liquidity
 from flask import request
 
 def get_exchange_name(exchange_key):
@@ -23,7 +23,7 @@ def calculate_arbitrage(exchange1, exchange2, min_liquidity):
     exchange1_tickers = exchange1_module.get_exchange_data()
     exchange2_tickers = exchange2_module.get_exchange_data()
 
-    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys()
+    common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys())
 
     data = []
     for symbol in common_symbols:
@@ -45,6 +45,10 @@ def calculate_arbitrage(exchange1, exchange2, min_liquidity):
             # Calculate the arbitrage opportunity in percentage terms
             arbitrage_opportunity = round(arbitrage - spread, 2)
 
+            # Include base URLs for trading
+            exchange1_trade_link = exchange1_config['trade_base_url'] + symbol.replace('/', '_')
+            exchange2_trade_link = exchange2_config['trade_base_url'] + symbol.replace('/', '_')
+
             # Add the new fields to the data dictionary
             data.append({
                 'symbol': symbol,
@@ -53,8 +57,8 @@ def calculate_arbitrage(exchange1, exchange2, min_liquidity):
                 'arbitrage': arbitrage,
                 'spread': spread,
                 'arbitrage_opportunity': arbitrage_opportunity,
-                'exchange1_trade_link': exchange1_config['trade_base_url'] + symbol.replace('/', '_'),
-                'exchange2_trade_link': exchange2_config['trade_base_url'] + symbol.replace('/', '_'),
+                'exchange1_trade_link': exchange1_trade_link,
+                'exchange2_trade_link': exchange2_trade_link,
                 'exchange1_name': exchange1_config['name'],
                 'exchange2_name': exchange2_config['name']
             })
