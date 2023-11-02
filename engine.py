@@ -19,8 +19,8 @@ def calculate_arbitrage(exchange1, exchange2):
     exchange1_module = get_exchange_module(exchange1_config['module'])
     exchange2_module = get_exchange_module(exchange2_config['module'])
 
-    exchange1_tickers = exchange1_module.get_exchange_data()
-    exchange2_tickers = exchange2_module.get_exchange_data()
+    exchange1_tickers = exchange1_module.get_exchange_tickers()
+    exchange2_tickers = exchange2_module.get_exchange_tickers()
 
     exchange1_trade_base_url = exchange1_config['trade_base_url']
     exchange2_trade_base_url = exchange2_config['trade_base_url']
