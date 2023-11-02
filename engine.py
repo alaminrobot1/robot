@@ -34,10 +34,10 @@ def calculate_arbitrage(exchange1, exchange2):
         order_book_exchange2 = exchange2_module.get_order_book(symbol)
 
         # Calculate bid and ask prices
-        exchange1_bid_price = sum(bid[0] * bid[1] for bid in order_book_exchange1['bids']) / sum(bid[1] for bid in order_book_exchange1['bids'])
-        exchange1_ask_price = sum(ask[0] * ask[1] for ask in order_book_exchange1['asks']) / sum(ask[1] for ask in order_book_exchange1['asks'])
-        exchange2_bid_price = sum(bid[0] * bid[1] for bid in order_book_exchange2['bids']) / sum(bid[1] for bid in order_book_exchange2['bids'])
-        exchange2_ask_price = sum(ask[0] * ask[1] for ask in order_book_exchange2['asks']) / sum(ask[1] for ask in order_book_exchange2['asks'])
+        exchange1_bid_price = order_book_exchange1['bids'][0][0]
+        exchange1_ask_price = order_book_exchange1['asks'][0][0]
+        exchange2_bid_price = order_book_exchange2['bids'][0][0]
+        exchange2_ask_price = order_book_exchange2['asks'][0][0]
 
         # Calculate arbitrage percentage based on bid and ask prices
         arbitrage_percentage = calculate_arbitrage_percentage(exchange1_ask_price, exchange2_bid_price)
