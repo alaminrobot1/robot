@@ -10,19 +10,22 @@
     <div class="engine">
         <h2>Calculation Engine</h2>
         <form action="/calculate" method="post">
-            <label for="exchange1"></label>
+            <label for="exchange1">Exchange 1:</label>
             <select name="exchange1" id="exchange1">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
                 {% endfor %}
             </select>
             <br>
-            <label for="exchange2"><i class="far fa-exchange-alt fa-rotate-90" style="transform: translate(-50%, -50%)"></i></label>
+            <label for="exchange2">Exchange 2:</label>
             <select name="exchange2" id="exchange2">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
                 {% endfor %}
             </select>
+            <br>
+            <label for="min_liquidity">Minimum Liquidity (USDT):</label>
+            <input type="text" name="min_liquidity" id="min_liquidity">
             <br>
             <input type="submit" value="Calculate Guaranteed Profit">
         </form>
@@ -50,7 +53,6 @@
                 <th>{{ exchange1_name }} Price</th>
                 <th>{{ exchange2_name }} Price</th>
                 <th>Guaranteed Profit (%)</th>
-                <th>Spread (%)</th>
                 <th>{{ exchange1_name }} Trade Link</th>
                 <th>{{ exchange2_name }} Trade Link</th>
             </tr>
@@ -62,13 +64,9 @@
                     <td>{{ item.exchange1_price }}</td>
                     <td>{{ item.exchange2_price }}</td>
                     <td class="arbitrage {% if item.arbitrage > 0 %}highlight-green{% else %}highlight-red{% endif %}">
-                        {{ item.arbitrage }}% <!-- Guaranteed Profit (%) -->
+                        {{ item.arbitrage }} <!-- Original term for calculations -->
                         <br>
                         <span class="data-term">Guaranteed Profit (%)</span> <!-- Displayed term -->
-                    </td>
-                    <td>{{ item.spread }}% <!-- Spread (%) -->
-                        <br>
-                        <span class="data-term">Spread (%)</span> <!-- Displayed term for the spread -->
                     </td>
                     <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
                     <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
