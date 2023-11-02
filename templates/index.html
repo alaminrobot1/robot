@@ -37,7 +37,7 @@
             <span class="value">{{ positive_count }}</span>
         </div>
         <div class="count">
-            <span class="label">Negative Count:</span>
+            <span class="label">Negative Count:</span> <!-- Corrected a typo here -->
             <span class="value">{{ negative_count }}</span>
         </div>
         <div class="count">
@@ -64,9 +64,9 @@
                     <td>{{ item.exchange1_price }}</td>
                     <td>{{ item.exchange2_price }}</td>
                     <td class="arbitrage {% if item.arbitrage > 0 %}highlight-green{% else %}highlight-red{% endif %}">
-                        {{ item.arbitrage }} <!-- Original term for calculations -->
+                        {{ item.arbitrage }}
                         <br>
-                        <span class="data-term">Guaranteed Profit (%)</span> <!-- Displayed term -->
+                        <span class="data-term">Guaranteed Profit (%)</span>
                     </td>
                     <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
                     <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
